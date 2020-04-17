@@ -38,7 +38,7 @@ const EXTENSION_DIR =  `${__dirname}/extensionlist_temp`;
 
 describe('ExtensionList.js', function() {
     // Set the default timeout for all tests
-    this.timeout(testTimeout.short);
+        this.timeout(testTimeout.short);
     suppressLogOutput(Extension);
     suppressLogOutput(ExtensionList);
     suppressLogOutput(Templates);
@@ -111,7 +111,7 @@ describe('ExtensionList.js', function() {
                 list.should.have.property(extensionName);
                 const { extensionWithTemplateProvider } = list;
                 extensionWithTemplateProvider.should.not.have.property('templateProvider');
-    
+
                 // Ensure provider has been added
                 templateController.providers.should.have.property(extensionName);
             });
@@ -120,15 +120,15 @@ describe('ExtensionList.js', function() {
                 createCodewindYamlFile(path.join(EXTENSION_DIR, extensionName), { name: extensionName, templates: templateRepositoryURL });
                 createTemplatesProviderFile(path.join(EXTENSION_DIR, extensionName));
                 const extensionList = new ExtensionList();
-    
+
                 await extensionList.initialise(EXTENSION_DIR, templateController);
                 const { _list: list } = extensionList;
                 list.should.have.property(extensionName);
                 const { extensionWithBoth } = list;
-                
+
                 // Ensure template repository has been added
                 templateController.getRepository(extensionWithBoth.templates).should.not.equal(null);
-    
+
                 // Ensure provider has not been added
                 templateController.providers.should.not.have.property(extensionName);
             });
@@ -202,7 +202,7 @@ describe('ExtensionList.js', function() {
             afterEach(() => {
                 execSync(`rm -rf ${EXTENSION_DIR}`);
             });
-            it('Loads multiple extensions from disk', async() => { 
+            it('Loads multiple extensions from disk', async() => {
                 const extensionList = new ExtensionList();
                 const extensions = await extensionList.loadExtensionsFromDisk(EXTENSION_DIR);
                 extensions.length.should.equal(numExtensionsToCreate);
@@ -211,14 +211,14 @@ describe('ExtensionList.js', function() {
                     extensionNames.should.include(name);
                 }
             });
-            it('Loads multiple extensions from disk and ignores an invalid directory', async() => { 
+            it('Loads multiple extensions from disk and ignores an invalid directory', async() => {
                 fs.ensureDirSync(path.join(EXTENSION_DIR, 'invaliddir'));
                 const extensionList = new ExtensionList();
                 const extensions = await extensionList.loadExtensionsFromDisk(EXTENSION_DIR);
                 extensions.length.should.equal(numExtensionsToCreate);
                 extensions.should.not.include('invaliddir');
             });
-            it('Correctly filters out nulls that are returned when an extension fails to load', async() => { 
+            it('Correctly filters out nulls that are returned when an extension fails to load', async() => {
                 fs.ensureDirSync(path.join(EXTENSION_DIR, 'invaliddir'));
                 const extensionList = new ExtensionList();
                 const extensions = await extensionList.loadExtensionsFromDisk(EXTENSION_DIR);
@@ -335,15 +335,15 @@ describe('ExtensionList.js', function() {
                 const extension1 = new Extension({ name: 'node-ext' });
                 extension1.projectType = 'nodejs';
                 extension1.detection = 'package.json';
-    
+
                 const extension2 = new Extension({ name: 'appsody-ext' });
                 extension2.projectType = 'appsody';
                 extension2.detection = 'appsody-config.yaml';
-    
+
                 const extensionList = new ExtensionList();
                 extensionList.add(extension1);
                 extensionList.add(extension2);
-    
+
                 const detectedList = extensionList.getDetectionList();
                 const expectedList = [
                     {
@@ -361,13 +361,13 @@ describe('ExtensionList.js', function() {
                 const extension1 = new Extension({ name: 'node-ext' });
                 extension1.projectType = 'nodejs';
                 extension1.detection = 'package.json';
-    
+
                 const extension2 = new Extension({ name: 'appsody-ext' });
-    
+
                 const extensionList = new ExtensionList();
                 extensionList.add(extension1);
                 extensionList.add(extension2);
-    
+
                 const detectedList = extensionList.getDetectionList();
                 detectedList.length.should.equal(1);
                 detectedList.should.deep.equal([{

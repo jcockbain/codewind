@@ -19,13 +19,13 @@ const chaiAsPromised = require('chai-as-promised');
 
 const Extension = rewire('../../../../src/pfe/portal/modules/Extension');
 const { suppressLogOutput } = require('../../../modules/log.service');
-const { 
+const {
     CODEWIND_YAML,
     COMPLETE_CODEWIND_YAML,
     createCodewindYamlFile,
     deleteCodewindYamlFile,
     createTemplatesProviderFile,
-    deleteTemplatesProviderFile,    
+     deleteTemplatesProviderFile,
 } = require('../../../modules/extension.service');
 
 chai.use(chaiSubset);
@@ -100,7 +100,7 @@ describe('Extension.js', () => {
             after(() => {
                 deleteCodewindYamlFile(tempDir);
                 deleteTemplatesProviderFile(tempDir);
-            }); 
+            });
         });
     });
 });
